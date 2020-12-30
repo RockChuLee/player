@@ -31,7 +31,7 @@ var app = new Vue({
     // 查询关键字
     query: "",
     // 歌曲数组
-    musicList: [123,456],
+    musicList: [],
     // 歌曲地址
     musicUrl: "",
     // 歌曲封面
@@ -51,7 +51,7 @@ var app = new Vue({
       var that = this;
       axios.get("https://autumnfish.cn/search?keywords=" + this.query).then(
         function(response) {
-          // console.log(response);
+          //将返回值的音乐列表赋值给musicList
           that.musicList = response.data.result.songs;
           console.log(response.data.result.songs);
         },
@@ -60,13 +60,10 @@ var app = new Vue({
     },
     // 歌曲播放
     playMusic: function(musicId) {
-      //   console.log(musicId);
       var that = this;
       // 获取歌曲地址
       axios.get("https://autumnfish.cn/song/url?id=" + musicId).then(
         function(response) {
-          // console.log(response);
-          // console.log(response.data.data[0].url);
           that.musicUrl = response.data.data[0].url;
         },
         function(err) {}
@@ -75,8 +72,6 @@ var app = new Vue({
       // 歌曲详情获取
       axios.get("https://autumnfish.cn/song/detail?ids=" + musicId).then(
         function(response) {
-          // console.log(response);
-          // console.log(response.data.songs[0].al.picUrl);
           that.musicCover = response.data.songs[0].al.picUrl;
         },
         function(err) {}
@@ -85,8 +80,7 @@ var app = new Vue({
       // 歌曲评论获取
       axios.get("https://autumnfish.cn/comment/hot?type=0&id=" + musicId).then(
         function(response) {
-          // console.log(response);
-          // console.log(response.data.hotComments);
+
           that.hotComments = response.data.hotComments;
         },
         function(err) {}
@@ -94,12 +88,10 @@ var app = new Vue({
     },
     // 歌曲播放
     play: function() {
-      // console.log("play");
       this.isPlaying = true;
     },
     // 歌曲暂停
     pause: function() {
-      // console.log("pause");
       this.isPlaying = false;
     },
     // 播放mv
@@ -107,7 +99,6 @@ var app = new Vue({
       var that = this;
       axios.get("https://autumnfish.cn/mv/url?id=" + mvid).then(
         function(response) {
-          // console.log(response);
           console.log(response.data.data.url);
           that.isShow = true;
           that.mvUrl = response.data.data.url;

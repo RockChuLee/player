@@ -26,8 +26,8 @@
           <ul class="song_list">
             <!-- 遍历循环musicList展示 -->
             <li v-for="item in musicList">
-<!--              点击播放音乐-->
-              <a href="javascript:;" @click="playMusic(item.id)"></a> 
+<!--              点击获取，音乐信息-->
+              <a href="javascript:;" @click="playMusic(item.id)"></a>
               <b>{{ item.name }}</b>
 <!--              如果有mvid，则展示播放mv按钮，点击播放mv-->
               <span v-if="item.mvid!=0" @click="playMV(item.mvid)"><i></i></span>
@@ -38,8 +38,8 @@
         <!-- 歌曲信息容器 -->
 <!--        通过css实现碟片旋转-->
         <div class="player_con" :class="{playing:isPlaying}">
+          <!-- 碟片卡针和黑胶碟片 -->
           <img src="images/player_bar.png" class="play_bar" />
-          <!-- 黑胶碟片 -->
           <img src="images/disc.png" class="disc autoRotate" />
 <!--          获取音乐封面-->
           <img :src="musicCover" class="cover autoRotate" />
@@ -61,10 +61,14 @@
         </div>
       </div>
       <div class="audio_con">
+        <!--播放器控件，play播放，pause暂停，musicUrl音乐地址-->
         <audio ref='audio' @play="play" @pause="pause" :src="musicUrl" controls autoplay loop class="myaudio"></audio>
       </div>
+<!--        遮罩层-->
       <div class="video_con" v-show="isShow" style="display: none;">
+<!--          video地址-->
         <video :src="mvUrl" controls="controls"></video>
+<!--          点击任意地方关闭遮罩-->
         <div class="mask" @click="hide"></div>
       </div>
     </div>
